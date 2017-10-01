@@ -3,10 +3,23 @@ package cad.osb.birthdaycountdown.repositories;
 import cad.osb.birthdaycountdown.dto.UserDTO;
 
 import java.util.List;
+import java.util.Set;
 
-public class HerokuUserRepository implements UserRepository {
+public class InMemUserRepository implements UserRepository {
+
+    List<UserDTO> allUsers;
+
+    public InMemUserRepository(List<UserDTO> allUsers) {
+        this.allUsers = allUsers;
+    }
+
     @Override
     public UserDTO createUser(UserDTO user) {
+        boolean isAdded = allUsers.add(user);
+        if (isAdded) {
+            int index = allUsers.indexOf(user);
+            return allUsers.get(index);
+        }
         return null;
     }
 

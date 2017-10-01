@@ -2,6 +2,7 @@ package cad.osb.birthdaycountdown.controllers;
 
 import cad.osb.birthdaycountdown.dto.UserDTO;
 import cad.osb.birthdaycountdown.services.UserService;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +21,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/userform")
+    @RequestMapping("/useredit")
     public ModelAndView showUserForm() {
-        return new ModelAndView("userform", "command", new UserDTO());
+        return new ModelAndView("useredit", "command", new UserDTO());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
