@@ -23,6 +23,8 @@ public class InMemUserRepository implements UserRepository {
         return null;
     }
 
+    // TODO : finish repository + fill .jsp files with some code
+
     @Override
     public UserDTO updateUser(UserDTO user) {
         return null;
