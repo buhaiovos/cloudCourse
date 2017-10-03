@@ -16,8 +16,8 @@ public class HerokuUserRepository implements UserRepository {
 
     private Connection getConnection() {
         try {
-            String url = System.getenv("JDBC_DATABASE_URL");
-            return DriverManager.getConnection(url);
+            //String url = System.getenv("JDBC_DATABASE_URL");
+            return DriverManager.getConnection(dbUrl);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
