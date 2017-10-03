@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
 
 @Controller
 public class BirthdayCountController {
@@ -22,11 +23,15 @@ public class BirthdayCountController {
     }
 
     @RequestMapping(value = "/countdown", method = RequestMethod.POST)
-    public String getBirthDayCountdown(@RequestParam("d") String bDate, Model model) {
-        LogManager.getLogger(BirthdayCountController.class).info(bDate);
+    public String getBirthDayCountdown(
+            @RequestParam("d") String bDate, Model model, Locale locale) {
+
+        LogManager.getLogger(BirthdayCountController.class)
+                .info("Initiating calculation for " + bDate);
+
         String days;
         try {
-            days = birthdayService.getDaysTillBirthday(bDate);
+            days = birthdayService.getDaysTillBirthday(bDate, locale);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

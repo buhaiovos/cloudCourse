@@ -6,19 +6,20 @@ import org.apache.logging.log4j.LogManager;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class BirthdayService {
 
-    public String getDaysTillBirthday(String dateString) throws ParseException {
+    public String getDaysTillBirthday(String dateString, Locale locale) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateString);
 
-        return getDayTillBirthDayFromDateObj(date);
+        return getDayTillBirthDayFromDateObj(date, locale);
     }
 
-    public String getDayTillBirthDayFromDateObj(Date date) {
+    public String getDayTillBirthDayFromDateObj(Date date, Locale locale) {
         DaysUntilBirthdayCalculator calculator =
-                new DaysUntilBirthdayCalculator();
+                new DaysUntilBirthdayCalculator(locale);
         double days = calculator.calculateDaysAmount(date);
 
         long daysWholeNumber = (long)days;

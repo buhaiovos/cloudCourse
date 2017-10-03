@@ -2,11 +2,18 @@ package cad.osb.birthdaycountdown.domain;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class DaysUntilBirthdayCalculator {
 
+    private Locale locale;
+
+    public DaysUntilBirthdayCalculator(Locale locale) {
+        this.locale = locale;
+    }
+
     public double calculateDaysAmount(Date birthDate) {
-        Calendar bDateTempCalendar = Calendar.getInstance();
+        Calendar bDateTempCalendar = Calendar.getInstance(locale);
         bDateTempCalendar.setTime(birthDate);
         // get current year
         Date currentDate = new Date();
