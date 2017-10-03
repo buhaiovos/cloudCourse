@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 @Controller
 public class BirthdayCountController {
@@ -26,19 +27,15 @@ public class BirthdayCountController {
 
     @RequestMapping(value = "/countdown", method = RequestMethod.POST)
     public String getBirthDayCountdown(
-            @RequestParam("d") String bDate, Model model, HttpServletRequest request) {
-        CookieLocaleResolver resolver = new CookieLocaleResolver();
-        //resolver.setDefaultLocale(Locale.forLanguageTag("uk-UA"));
-        Locale locale = resolver.resolveLocale(request);
-
+            @RequestParam("d") String bDate, Model model, TimeZone timeZone) {
         LogManager.getLogger(BirthdayCountController.class)
                 .info("Initiating calculation for " + bDate);
         LogManager.getLogger(BirthdayCountController.class)
-                .info("For locale " + locale);
+                .info("For timezone " + timeZone);
 
         String days;
         try {
-            days = birthdayService.getDaysTillBirthday(bDate, locale);
+            days = birthdayService.getDaysTillBirthday(bDate);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

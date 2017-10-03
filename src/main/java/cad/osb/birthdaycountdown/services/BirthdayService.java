@@ -10,16 +10,16 @@ import java.util.Locale;
 
 public class BirthdayService {
 
-    public String getDaysTillBirthday(String dateString, Locale locale) throws ParseException {
+    public String getDaysTillBirthday(String dateString) throws ParseException {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateString);
 
-        return getDayTillBirthDayFromDateObj(date, locale);
+        return getDayTillBirthDayFromDateObj(date);
     }
 
-    public String getDayTillBirthDayFromDateObj(Date date, Locale locale) {
+    public String getDayTillBirthDayFromDateObj(Date date) {
         DaysUntilBirthdayCalculator calculator =
-                new DaysUntilBirthdayCalculator(locale);
+                new DaysUntilBirthdayCalculator();
         double days = calculator.calculateDaysAmount(date);
 
         long daysWholeNumber = (long)days;

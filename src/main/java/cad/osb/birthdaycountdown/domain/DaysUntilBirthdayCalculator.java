@@ -6,14 +6,8 @@ import java.util.Locale;
 
 public class DaysUntilBirthdayCalculator {
 
-    private Locale locale;
-
-    public DaysUntilBirthdayCalculator(Locale locale) {
-        this.locale = locale;
-    }
-
     public double calculateDaysAmount(Date birthDate) {
-        Calendar bDateTempCalendar = Calendar.getInstance(locale);
+        Calendar bDateTempCalendar = Calendar.getInstance();
         bDateTempCalendar.setTime(birthDate);
         // get current year
         Date currentDate = new Date();
