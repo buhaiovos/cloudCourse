@@ -23,12 +23,7 @@ public class BirthdayService {
         double days = calculator.calculateDaysAmount(date);
 
         long daysWholeNumber = (long)days;
-        double fraction = days - daysWholeNumber;
-        LogManager.getLogger(BirthdayService.class).info("fractoion " + fraction);
-        long hours = (long) (fraction * 24);
-        LogManager.getLogger(BirthdayService.class).info("hours " + hours);
 
-        return new StringBuilder(daysWholeNumber + " days " +
-                hours + " hours").toString();
+        return new StringBuilder(daysWholeNumber + " days ").toString();
     }
 }

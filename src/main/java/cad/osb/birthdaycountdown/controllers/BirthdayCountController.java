@@ -4,17 +4,11 @@ import cad.osb.birthdaycountdown.services.BirthdayService;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
-import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
 
 @Controller
 public class BirthdayCountController {
@@ -27,11 +21,9 @@ public class BirthdayCountController {
 
     @RequestMapping(value = "/countdown", method = RequestMethod.POST)
     public String getBirthDayCountdown(
-            @RequestParam("d") String bDate, Model model, TimeZone timeZone) {
+            @RequestParam("d") String bDate, Model model) {
         LogManager.getLogger(BirthdayCountController.class)
                 .info("Initiating calculation for " + bDate);
-        LogManager.getLogger(BirthdayCountController.class)
-                .info("For timezone " + timeZone);
 
         String days;
         try {
