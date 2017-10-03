@@ -23,7 +23,7 @@ public class UserController {
 
     @RequestMapping("/useredit")
     public ModelAndView showUserForm() {
-        return new ModelAndView("useredit", "command", new UserDTO());
+        return new ModelAndView("userform", "command", new UserDTO());
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(UserDTO user) {
         userRepository.deleteUser(user);
     }
+
+    @Override
+    public long getBirthdayCountDown(int id) {
+        return 0;
+    }
 }

@@ -10,4 +10,5 @@ public interface UserService {
     UserDTO getUserById(int id);
     List<UserDTO> getAllUsers();
     void deleteUser(UserDTO user);
+    long getBirthdayCountDown(int id);
 }

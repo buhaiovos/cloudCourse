@@ -16,6 +16,9 @@
     <bean class="cad.osb.birthdaycountdown.controllers.UserController">
         <constructor-arg ref="userService"/>
     </bean>
+    <bean class="cad.osb.birthdaycountdown.controllers.BirthdayCountController">
+        <constructor-arg ref="birthdayService"/>
+    </bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/"></property>
