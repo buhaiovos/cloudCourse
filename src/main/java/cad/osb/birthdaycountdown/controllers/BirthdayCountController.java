@@ -28,7 +28,7 @@ public class BirthdayCountController {
     public String getBirthDayCountdown(
             @RequestParam("d") String bDate, Model model, HttpServletRequest request) {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(Locale.forLanguageTag("uk-UA"));
+        //resolver.setDefaultLocale(Locale.forLanguageTag("uk-UA"));
         Locale locale = resolver.resolveLocale(request);
 
         LogManager.getLogger(BirthdayCountController.class)
