@@ -1,12 +1,16 @@
 package cad.osb.birthdaycountdown.repositories;
 
 import cad.osb.birthdaycountdown.dto.UserDTO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HerokuUserRepository implements UserRepository {
+
+    private static Logger logger = LogManager.getLogger(HerokuUserRepository.class);
 
     String dbUrl = "jdbc:postgresql://ec2-50-17-203-195.compute-1.amazonaws.com:5432/dbor3ci1tlb8a9?user=rkzhwbnwnffqqz&password=589eef7a8229f62f4f6e82c9f8837eb1dbcbf7bfab43b82cd3c9301571f6d646&sslmode=require";
 
@@ -21,27 +25,73 @@ public class HerokuUserRepository implements UserRepository {
 
     @Override
     public UserDTO createUser(UserDTO user) {
-        throw new UnsupportedOperationException("Heroku repo");
+        try (Connection conn = getConnection()) {
+            logger.info("createUser(): connection retrieved. Creating statement for user:" + user);
+
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO USERS ('NAME', 'BIRTH_DATE') VALUES (?, ?)");
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getBirthDay());
+            int status = stmt.executeUpdate();
+
+            logger.info("createUser(): updateExecuted with " + status);
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public UserDTO updateUser(UserDTO user) {
-        throw new UnsupportedOperationException("Heroku repo");
+        try (Connection conn = getConnection()) {
+            logger.info("updateUser(): connection retrieved. Creating statement for user:" + user);
+
+            PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET 'NAME' = ?, 'BIRTH_DATE' = ? WHERE 'ID' = ?");
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getBirthDay());
+            stmt.setInt(3, user.getId());
+            int status = stmt.executeUpdate();
+
+            logger.info("updateUser(): updateExecuted with " + status);
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public UserDTO getUserById(int id) {
-        throw new UnsupportedOperationException("Heroku repo");
+        try (Connection conn = getConnection()) {
+            logger.info("getUserById(): connection retrieved. "
+                    + "Creating statement");
+
+            PreparedStatement stmt =
+                    conn.prepareStatement("SELECT * FROM USERS WHERE 'ID' = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            UserDTO user = new UserDTO();
+            user.setId(rs.getInt(1));
+            user.setName(rs.getString(2));
+            user.setBirthDay(rs.getString(3));
+
+            logger.info("getUserById(): connection retrieved. " +
+                    "Returning user: " + user);
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<UserDTO> allUsers() {
         try (Connection conn = getConnection()) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM USERS");
+            logger.info("allUsers(): connection retrieved. "
+                        + "Creating statement");
 
+            PreparedStatement stmt =
+                    conn.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = stmt.executeQuery();
             ArrayList<UserDTO> usersList = new ArrayList<>();
-
             while (rs.next()) {
                 UserDTO user = new UserDTO();
                 user.setId(rs.getInt(1));
@@ -50,6 +100,8 @@ public class HerokuUserRepository implements UserRepository {
                 usersList.add(user);
             }
 
+            logger.info("allUsers(): connection retrieved. " +
+                    "Returning list with size " + usersList.size());
             return usersList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,6 +111,16 @@ public class HerokuUserRepository implements UserRepository {
 
     @Override
     public void deleteUser(UserDTO user) {
-        throw new UnsupportedOperationException("Heroku repo");
+        try (Connection conn = getConnection()) {
+            logger.info("deleteUser(): connection retrieved. Creating statement for user:" + user);
+
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM USERS WHERE 'ID' = ?");
+            stmt.setInt(1, user.getId());
+            int status = stmt.executeUpdate();
+
+            logger.info("deleteUser(): updateExecuted with " + status);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
