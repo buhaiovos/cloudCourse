@@ -28,6 +28,8 @@ public class BirthdayCountController {
 
         LogManager.getLogger(BirthdayCountController.class)
                 .info("Initiating calculation for " + bDate);
+        LogManager.getLogger(BirthdayCountController.class)
+                .info("For locale " + locale);
 
         String days;
         try {
