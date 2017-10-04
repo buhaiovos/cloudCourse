@@ -1,6 +1,8 @@
 package cad.osb.birthdaycountdown.dto;
 
-public class DaysTillBirthdayDTO {
+import java.io.Serializable;
+
+public class DaysTillBirthdayDTO implements Serializable{
 
     private String daysLeft;
 
