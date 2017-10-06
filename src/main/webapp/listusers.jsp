@@ -12,7 +12,7 @@
     <title>Birthday coutndown - All users</title>
 </head>
 <body>
-    <h3>All users</h3>
+    <h3>All users:</h3>
     <table>
     <tr><th>Id</th><th>Name</th><th>Birthday</th><th>Edit</th><th>Delete</th></tr>
     <c:forEach var="user" items="${list}">
