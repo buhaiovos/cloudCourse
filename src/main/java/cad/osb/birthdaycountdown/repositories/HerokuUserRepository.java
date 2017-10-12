@@ -12,8 +12,6 @@ public class HerokuUserRepository implements UserRepository {
 
     private static Logger logger = LogManager.getLogger(HerokuUserRepository.class);
 
-    String dbUrl = "jdbc:postgresql://ec2-50-17-203-195.compute-1.amazonaws.com:5432/dbor3ci1tlb8a9?user=rkzhwbnwnffqqz&password=589eef7a8229f62f4f6e82c9f8837eb1dbcbf7bfab43b82cd3c9301571f6d646&sslmode=require";
-
     private Connection getConnection() {
         try {
             String url = System.getenv("JDBC_DATABASE_URL");
