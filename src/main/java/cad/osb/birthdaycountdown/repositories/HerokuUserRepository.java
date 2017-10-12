@@ -24,9 +24,12 @@ public class HerokuUserRepository implements UserRepository {
     @Override
     public UserDTO createUser(UserDTO user) {
         try (Connection conn = getConnection()) {
-            logger.info("createUser(): connection retrieved. Creating statement for user:" + user);
+            logger.info("createUser(): connection retrieved. " +
+                    "Creating statement for user:" + user);
 
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO USERS (NAME, BIRTH_DATE) VALUES (?, ?)");
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO USERS (NAME, BIRTH_DATE) VALUES (?, ?)"
+            );
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getBirthDay());
             int status = stmt.executeUpdate();
@@ -41,9 +44,12 @@ public class HerokuUserRepository implements UserRepository {
     @Override
     public UserDTO updateUser(UserDTO user) {
         try (Connection conn = getConnection()) {
-            logger.info("updateUser(): connection retrieved. Creating statement for user:" + user);
+            logger.info("updateUser(): connection retrieved. " +
+                    "Creating statement for user:" + user);
 
-            PreparedStatement stmt = conn.prepareStatement("UPDATE USERS SET NAME = ?, BIRTH_DATE = ? WHERE ID = ?");
+            PreparedStatement stmt = conn.prepareStatement(
+                    "UPDATE USERS SET NAME = ?, BIRTH_DATE = ? WHERE ID = ?"
+            );
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getBirthDay());
             stmt.setInt(3, user.getId());
@@ -63,7 +69,9 @@ public class HerokuUserRepository implements UserRepository {
                     + "Creating statement");
 
             PreparedStatement stmt =
-                    conn.prepareStatement("SELECT * FROM USERS WHERE ID = ?");
+                    conn.prepareStatement(
+                            "SELECT * FROM USERS WHERE ID = ?"
+                    );
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
@@ -110,9 +118,12 @@ public class HerokuUserRepository implements UserRepository {
     @Override
     public void deleteUser(UserDTO user) {
         try (Connection conn = getConnection()) {
-            logger.info("deleteUser(): connection retrieved. Creating statement for user:" + user);
+            logger.info("deleteUser(): connection retrieved. " +
+                    "Creating statement for user:" + user);
 
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM USERS WHERE ID = ?");
+            PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM USERS WHERE ID = ?"
+            );
             stmt.setInt(1, user.getId());
             int status = stmt.executeUpdate();
 
