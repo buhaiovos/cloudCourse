@@ -24,6 +24,6 @@ public class BirthdayService {
 
         long daysWholeNumber = (long)days;
 
-        return new StringBuilder(daysWholeNumber + " days ").toString();
+        return new StringBuilder(daysWholeNumber + " days").toString();
     }
 }
