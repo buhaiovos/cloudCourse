@@ -2,27 +2,34 @@ package cad.osb.birthdaycountdown.controllers;
 
 import cad.osb.birthdaycountdown.dto.BirthdayDTO;
 import cad.osb.birthdaycountdown.dto.DaysTillBirthdayDTO;
+import cad.osb.birthdaycountdown.dto.UserDTO;
 import cad.osb.birthdaycountdown.services.BirthdayService;
+import cad.osb.birthdaycountdown.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.validation.BindingResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @RestController
-public class BirthdayCountRestController {
+@RequestMapping("/rest")
+public class RestController_ {
 
-    private static final Logger LOG = LogManager.getLogger(BirthdayCountRestController.class);
+    private static final Logger LOG = LogManager.getLogger(RestController_.class);
 
-    private BirthdayService service;
+    private BirthdayService birthdayService;
+    private UserService userService;
 
-    public BirthdayCountRestController(BirthdayService service) {
-        this.service = service;
+    @Autowired
+    public RestController_(BirthdayService service, UserService userService) {
+        this.birthdayService = service;
+        this.userService = userService;
     }
 
-    @RequestMapping(value = "/rest/birthday", method = RequestMethod.GET)
+    @RequestMapping(value = "/birthday", method = RequestMethod.GET)
     public @ResponseBody DaysTillBirthdayDTO helloCheck() {
         LOG.info("Here");
         DaysTillBirthdayDTO response = new DaysTillBirthdayDTO();
@@ -30,18 +37,27 @@ public class BirthdayCountRestController {
         return response;
     }
 
-    @RequestMapping(value = "/rest/birthday", method = RequestMethod.POST)
+    @RequestMapping(value = "/birthday", method = RequestMethod.POST)
     public @ResponseBody DaysTillBirthdayDTO getDaysTillBirthday(
             @RequestBody BirthdayDTO birthdayDTO) throws ParseException {
         LOG.info("Here-2");
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         String daysLeft =
-                service.getDaysTillBirthday(df.format(birthdayDTO.getDate()));
+                birthdayService.getDaysTillBirthday(df.format(birthdayDTO.getDate()));
         DaysTillBirthdayDTO response = new DaysTillBirthdayDTO();
         response.setDaysLeft(daysLeft);
         LOG.info("Here-3");
         return response;
     }
 
+    @GetMapping(value = "/users")
+    public List<UserDTO> getUsers() {
+        return userService.getAllUsers();
+    }
+
+    @GetMapping(value="/user/{id}")
+    public UserDTO userById(@PathVariable("id") int id) {
+        return userService.getUserById(id);
+    }
 }
