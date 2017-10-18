@@ -8,11 +8,14 @@ import cad.osb.birthdaycountdown.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
 @RequestMapping("/rest")
@@ -51,12 +54,12 @@ public class RestController_ {
         return response;
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "/users", produces = APPLICATION_JSON_UTF8_VALUE)
     public List<UserDTO> getUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value="/user/{id}")
+    @GetMapping(value="/user/{id}", produces = APPLICATION_JSON_UTF8_VALUE)
     public UserDTO userById(@PathVariable("id") int id) {
         return userService.getUserById(id);
     }
