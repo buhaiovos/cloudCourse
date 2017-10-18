@@ -28,7 +28,7 @@ public class DaysUntilBirthdayCalculator {
             daysAmount = getAmount(bDateTempCalendar.getTime(), currentDate);
         }
 
-        return daysAmount;
+        return daysAmount+=1;
     }
 
     private int getCurrentYear(Date currentDate) {
